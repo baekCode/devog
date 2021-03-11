@@ -1,0 +1,124 @@
+// post id init
+let postId = 1;
+
+// post array init
+const posts = [
+  {
+    id   : 1,
+    title: '제목',
+    body : '내용'
+  }
+];
+
+/**
+ * 포스트 작성
+ * POST /api/posts
+ * {title, body}
+ * */
+exports.write = ctx => {
+  // REST API의 Requset body 는 ctx.request.body 조회 할 수 없음
+  const {title, body} = ctx.request.body;
+  postId += 1;
+
+  const post = {id: postId, title, body};
+  posts.push(post);
+  ctx.body = post;
+};
+
+/**
+ * 포스트 조회
+ * GET /api/posts
+ * */
+exports.list = ctx => {
+  ctx.body = posts;
+};
+
+/**
+ * 특정 포스트 조회
+ * GET /api/posts/:id
+ * */
+exports.read = ctx => {
+  const {id} = ctx.params;
+  const post = posts.find(item => item.id.toString() === id);
+  // 포스트가 없으면 404 반환
+  if (!post) {
+    ctx.status = 404;
+    ctx.body = {
+      message: '포스트가 존재하지 않습니다.'
+    };
+    return;
+  }
+  // 포스트가 존재하면 해당 포스트 반환
+  ctx.body = post;
+};
+
+/**
+ * 특정 포스트 제거
+ * DELETE /api/posts/:id
+ * */
+exports.remove = ctx => {
+  const {id} = ctx.params;
+  const index = posts.findIndex(item => item.id.toString() === id);
+
+  // 포스트가 없으면 404 반환
+  if (index === -1) {
+    ctx.status = 404;
+    ctx.body = {
+      message: '포스트가 존재하지 않습니다.'
+    };
+    return;
+  }
+  // 포스트가 존재하면 index 번쨰 아이템 제거
+  posts.splice(index, 1);
+  ctx.status = 204;
+};
+
+/**
+ * 특정 포스트 수정(교체)
+ * PUT /api/posts/:id
+ * {title, body}
+ * */
+exports.replace = ctx => {
+  const {id} = ctx.params;
+  const index = posts.findIndex(item => item.id.toString() === id);
+
+  // 포스트가 없으면 404 반환
+  if (index === -1) {
+    ctx.status = 404;
+    ctx.body = {
+      message: '포스트가 존재하지 않습니다.'
+    };
+    return;
+  }
+
+  posts[index] = {
+    id,
+    ...ctx.request.body
+  };
+  ctx.body = posts[index];
+};
+
+/**
+ * 포스트 수정(특정 필드 변경)
+ * PATCH /api/posts/:id
+ * {title, body}
+ * */
+exports.update = ctx => {
+  const {id} = ctx.params;
+  const index = posts.findIndex(item => item.id.toString() === id);
+
+  // 포스트가 없으면 404 반환
+  if (index === -1) {
+    ctx.status = 404;
+    ctx.body = {
+      message: '포스트가 존재하지 않습니다.'
+    };
+    return;
+  }
+
+  posts[index] = {
+    ...posts[index],
+    ...ctx.request.body
+  };
+  ctx.body = posts[index];
+};
