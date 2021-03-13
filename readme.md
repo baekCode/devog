@@ -77,3 +77,22 @@ rm -rf node 설치가 된 경로
 
 `mongo` : mongoDB 접속
 
+
+
+-----
+
+#### node 환경에서 es module 사용하기
+
+node 12 버전 이상부터는 package.json 에서 type : module 을 설정하면 node 에서도 import/export module 사용이 가능하다.
+
+ ![스크린샷 2021-03-13 오후 10.02.32](/Users/baekcode/Desktop/스크린샷 2021-03-13 오후 10.02.32.png)
+
+
+
+node 에서 import 할때 확장자 까지 써야 한다.
+
+확장자를 사용하지 않았을때는 아래와 같이 에러표기
+
+![스크린샷 2021-03-13 오후 10.03.37](/Users/baekcode/Desktop/스크린샷 2021-03-13 오후 10.03.37.png)
+
+![스크린샷 2021-03-13 오후 10.04.27](/Users/baekcode/Desktop/스크린샷 2021-03-13 오후 10.04.27.png)
