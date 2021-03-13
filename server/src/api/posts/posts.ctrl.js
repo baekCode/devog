@@ -15,7 +15,7 @@ const posts = [
  * POST /api/posts
  * {title, body}
  * */
-exports.write = ctx => {
+export const write = ctx => {
   // REST API의 Requset body 는 ctx.request.body 조회 할 수 없음
   const {title, body} = ctx.request.body;
   postId += 1;
@@ -29,7 +29,7 @@ exports.write = ctx => {
  * 포스트 조회
  * GET /api/posts
  * */
-exports.list = ctx => {
+export const list = ctx => {
   ctx.body = posts;
 };
 
@@ -37,7 +37,7 @@ exports.list = ctx => {
  * 특정 포스트 조회
  * GET /api/posts/:id
  * */
-exports.read = ctx => {
+export const read = ctx => {
   const {id} = ctx.params;
   const post = posts.find(item => item.id.toString() === id);
   // 포스트가 없으면 404 반환
@@ -56,7 +56,7 @@ exports.read = ctx => {
  * 특정 포스트 제거
  * DELETE /api/posts/:id
  * */
-exports.remove = ctx => {
+export const remove = ctx => {
   const {id} = ctx.params;
   const index = posts.findIndex(item => item.id.toString() === id);
 
@@ -78,7 +78,7 @@ exports.remove = ctx => {
  * PUT /api/posts/:id
  * {title, body}
  * */
-exports.replace = ctx => {
+export const replace = ctx => {
   const {id} = ctx.params;
   const index = posts.findIndex(item => item.id.toString() === id);
 
@@ -103,7 +103,7 @@ exports.replace = ctx => {
  * PATCH /api/posts/:id
  * {title, body}
  * */
-exports.update = ctx => {
+export const update = ctx => {
   const {id} = ctx.params;
   const index = posts.findIndex(item => item.id.toString() === id);
 
