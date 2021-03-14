@@ -1,4 +1,7 @@
+import mongoose from 'mongoose';
 import Post from '../../models/post.js';
+
+const {ObjectId} = mongoose.Types;
 
 /**
  * 포스트 작성
@@ -80,4 +83,16 @@ export const update = async ctx => {
   } catch (e) {
     ctx.throw(500, e);
   }
+};
+
+/**
+ * ID 검증 - mongoose.Type ObjectId
+ * */
+export const checkObejctId = (ctx, next) => {
+  const {id} = ctx.params;
+  if (!ObjectId.isValid(id)) {
+    ctx.status = 400; // Bad Request
+    return;
+  }
+  return next();
 };
