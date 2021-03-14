@@ -16,7 +16,7 @@ export const write = async ctx => {
     tags : Joi.array().items(Joi.string()).required()
   });
 
-  const result = Joi.validate(ctx.request.body, schema);
+  const result = schema.validate(ctx.request.body);
   if (result.error) {
     ctx.status = 400;
     ctx.body = result.error;
@@ -102,7 +102,7 @@ export const update = async ctx => {
     tags : Joi.array().items(Joi.string())
   });
 
-  const result = Joi.validate(ctx.request.body, schema);
+  const result = schema.validate(ctx.request.body);
   if (result.error) {
     ctx.status = 400;
     ctx.body = result.error;
