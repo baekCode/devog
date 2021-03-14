@@ -243,3 +243,41 @@ export const remove = async ctx => {
   }
 };
 ```
+
+
+
+##### Post - PATCH 요청 (데이터 수정)
+
+PATCH 요청으로 데이터 수정
+
+findByIdAndUpdate() 메소드를 사용한다.
+
+findByIdAndUpdate() 메소드에서 전달되는 인자 값은 id, data가 담긴 request.body, 옵션
+
+옵션에서 { new : true } 를 넣어 주는데. 
+
+해당 값이 트루로 들어온다면 업데이트된 데이터를 반환하고, 반대로 false 이면 업데이트 되기전 데이터를 반환한다.
+
+```javascript
+/**
+ * 포스트 수정(특정 필드 변경)
+ * PATCH /api/posts/:id
+ * {title, body}
+ * */
+export const update = async ctx => {
+  const {id} = ctx.params;
+  try {
+    const post = await Post.findByIdAndUpdate(id, ctx.request.body, {
+      new: true,
+    }).exec();
+    if (!post) {
+      ctx.status = 404;
+      return;
+    }
+    ctx.body = post;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+```
+
