@@ -1,4 +1,4 @@
-import Post from './models/post';
+import Post from './models/post.js';
 
 export default function mockData() {
   const posts = [...Array(40).keys()].map(i => ({
