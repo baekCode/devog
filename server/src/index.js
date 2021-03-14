@@ -4,7 +4,6 @@ import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
 import mongoose from 'mongoose';
 import api from './api/index.js';
-import mockData from './mockData.js';
 
 dotenv.config();
 
@@ -14,7 +13,6 @@ mongoose
   .connect(MONGO_URI, {useNewUrlParser: true, useFindAndModify: false})
   .then(() => {
     console.log('Connected to MongoDB');
-    mockData();
   })
   .catch(e => {
     console.error(e);
