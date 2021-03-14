@@ -281,3 +281,100 @@ export const update = async ctx => {
 };
 ```
 
+
+
+#### ObjectId 검증
+
+api 요청을 할때 id가 올바른 ObjectId 형식이 아니라면 500 에러가 발생한다.
+
+이는 보통 서버에서 처리하지 않아 내부적으로 문제가 생겼을때 발생한다.
+
+잘못된 id를 전달했다면 클라이언트가 요청을 잘못 보낸것이니 `HTTP Status cod : 400 Bad Request` 를 띄워야한다.
+
+그러기 위해서는 id 값이 올바른 ObjectId 인지 확인을 해야한다.
+
+
+
+**mongoose 에서 제공하는 ObjectId를 사용하자.**
+
+```javascript
+import mongoose from 'mongoose';
+
+const {ObjectId} = mongoose.Types;
+ObjectId.isValid(id);
+```
+
+Post API 에서 Id 값이 사용되는 곳은 아래 3곳이다.
+
+- read
+- remove
+- update 
+
+
+
+checkObjectId 미들웨어를 만들자.
+
+```javascript
+import mongoose from 'mongoose';
+
+const {ObjectId} = mongoose.Types;
+
+export const checkObjectId = (ctx, next) => {
+  // url parameter id 를 받아온다.
+  const {id} = ctx.params;
+  
+  // ObjectId.isValid() 메소드를 이용해서 validation, 인증되지 않는 id 라면
+  // 400 bad request 내보내자.
+  if(!ObjectId.isValid(id)) {
+    ctx.status = 400;
+    return;
+  }
+  
+  // 인증된 id 라면 next!
+  return next();
+} 
+```
+
+
+
+##### Post api 미들웨어 추가
+
+```javascript
+// src/api/posts/index.js
+
+import Router from 'koa-router';
+import * as postsCtrl from './posts.ctrl';
+
+const posts = new Router();
+
+posts.get('/', postsCtrl.list);
+posts.post('/', postsCtrl.write);
+posts.get('/:id', postsCtrl.checkObejctId, postsCtrl.read);
+posts.delete('/:id', postsCtrl.checkObejctId, postsCtrl.remove);
+posts.patch('/:id', postsCtrl.checkObejctId, postsCtrl.update);
+
+...
+```
+
+
+
+**! posts.index.js 리팩토링**
+
+```javascript
+const posts = new Router();
+
+posts.get('/', postsCtrl.list);
+posts.post('/', postsCtrl.write);
+
+const post = new Router();
+
+post.get('/', postsCtrl.read);
+post.delete('/', postsCtrl.remove);
+post.patch('/', postsCtrl.update);
+
+posts.use('/:id', postsCtrl.checkObejctId, post.routes());
+```
+
+posts 와 post를 나누어서 별도의 post 단일 라우터를 만들어서 
+
+posts 라우터에 등록한다. 
