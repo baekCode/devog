@@ -473,3 +473,10 @@ export const update = async ctx => {
 
 list API 에서 exec() 하기전에 sort() 를 넣어준다.
 
+
+
+##### 보이는 갯수 제한
+
+list API 에서 보여주는 갯수를 제한 하고 싶을때는 limit() 함수를 사용한다.
+
+이함수도 sort() 마찬가지로  exec() 전에 호출한다.
