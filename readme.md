@@ -509,3 +509,11 @@ ctx.set('Last-Post', Math.ceil(postCount / 10))
 
 ```
 
+
+
+##### 내용 길이 제한
+
+list API 에서 조회한 데이터들중에 body(Post schema body를 말함) 내용이 200자 제한 처리를 하려면
+
+Json 형태로 변환 하여 body의 length 의 값을 계산하여준다.
+
