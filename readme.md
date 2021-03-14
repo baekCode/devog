@@ -378,3 +378,84 @@ posts.use('/:id', postsCtrl.checkObejctId, post.routes());
 posts 와 post를 나누어서 별도의 post 단일 라우터를 만들어서 
 
 posts 라우터에 등록한다. 
+
+
+
+-----
+
+#### Request Body 검증 
+
+POST, PATCH 요청이 들어왔을 경우, data 를 Body 에 담아서 보낸다.
+
+이 경우에도 검증이 되어야 한다.
+
+if 문으로 비어있는지 검증 하는 방법이 있겠지만
+
+Joi 라이브러리를 사용한다.
+
+`yarn add joi`
+
+
+
+POST 요청인 write 에서 활용 Joi.object().keys() 를 이용하여 스키마 검증한다.
+
+```javascript
+//posts.ctrl.js
+
+import Joi from 'joi';
+import mongoose from 'mongoose';
+import Post from '../../models/post.js';
+...
+
+export const write = async ctx => {
+  // 스키마 객체 검증
+  const schema = Joi.object().keys({
+    title: Joi.string().required(),
+    body : Joi.string().required(),
+    tags : Joi.array().items(Joi.string()).required()
+  });
+  
+  // 검증 에러가 있다면 400 상태코드와 에러를 보여줌
+  const result = Joi.validate(ctx.request.body, schema);
+  if (result.error) {
+    ctx.status = 400;
+    ctx.body = result.error;
+    return;
+  }
+  
+  const {title, body, tags} = ctx.request.body;
+  const post = new Post({title, body, tags});
+  ...
+}
+
+```
+
+
+
+POST 에서는 body 에 담긴 객체가 필수값이므로 required()를 넣었고 
+
+PATCH 에서의 body 는 필수 값이 아니니 required() 없이 넣어준다.
+
+```javascript
+//posts.ctrl.js
+...
+
+export const update = async ctx => {
+
+  const schema = Joi.object().keys({
+    title: Joi.string(),
+    body : Joi.string(),
+    tags : Joi.array().items(Joi.string())
+  });
+
+  const result = Joi.validate(ctx.request.body, schema);
+  if (result.error) {
+    ctx.status = 400;
+    ctx.body = result.error;
+    return;
+  }
+  const {id} = ctx.params;
+	...
+}
+```
+
