@@ -459,3 +459,17 @@ export const update = async ctx => {
 }
 ```
 
+
+
+-----
+
+### Posts 페이지네이션
+
+임시 데이터를 만들어서 초기 1회만 실행하여 mongodb에 저장하여준다.
+
+
+
+##### 포스트 역순으로 불러오기
+
+list API 에서 exec() 하기전에 sort() 를 넣어준다.
+
