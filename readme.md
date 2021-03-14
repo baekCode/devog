@@ -173,3 +173,50 @@ export const write = async ctx => {
 
 (▲▲ 저장된 데이터 데이터_4번 요청한 데이터들)
 
+
+
+##### Post - GET 요청 (Posts)
+
+전체 포스트를 조회
+
+```javascript
+/**
+ * 포스트 조회
+ * GET /api/posts
+ * */
+export const list = async ctx => {
+  try {
+    const posts = await Post.find().exec();
+    ctx.body = posts;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+```
+
+
+
+##### Post - GET 요청 (단일 Post)
+
+하나의 특정 포스트를 조회 
+
+```javascript
+/**
+ * 특정 포스트 조회
+ * GET /api/posts/:id
+ * */
+export const read = async ctx => {
+  const {id} = ctx.params;
+  try {
+    const post = await Post.findById(id).exec();
+    if (!post) {
+      ctx.status = 404;
+      return;
+    }
+    ctx.body = post;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+```
+
