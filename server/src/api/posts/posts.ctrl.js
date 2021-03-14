@@ -1,28 +1,19 @@
-// post id init
-let postId = 1;
-
-// post array init
-const posts = [
-  {
-    id   : 1,
-    title: '제목',
-    body : '내용'
-  }
-];
+import Post from '../../models/post.js';
 
 /**
  * 포스트 작성
  * POST /api/posts
  * {title, body}
  * */
-export const write = ctx => {
-  // REST API의 Requset body 는 ctx.request.body 조회 할 수 없음
-  const {title, body} = ctx.request.body;
-  postId += 1;
-
-  const post = {id: postId, title, body};
-  posts.push(post);
-  ctx.body = post;
+export const write = async ctx => {
+  const {title, body, tags} = ctx.request.body;
+  const post = new Post({title, body, tags});
+  try {
+    await post.save();
+    ctx.body = post;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
 };
 
 /**
@@ -30,7 +21,6 @@ export const write = ctx => {
  * GET /api/posts
  * */
 export const list = ctx => {
-  ctx.body = posts;
 };
 
 /**
@@ -38,18 +28,6 @@ export const list = ctx => {
  * GET /api/posts/:id
  * */
 export const read = ctx => {
-  const {id} = ctx.params;
-  const post = posts.find(item => item.id.toString() === id);
-  // 포스트가 없으면 404 반환
-  if (!post) {
-    ctx.status = 404;
-    ctx.body = {
-      message: '포스트가 존재하지 않습니다.'
-    };
-    return;
-  }
-  // 포스트가 존재하면 해당 포스트 반환
-  ctx.body = post;
 };
 
 /**
@@ -57,45 +35,6 @@ export const read = ctx => {
  * DELETE /api/posts/:id
  * */
 export const remove = ctx => {
-  const {id} = ctx.params;
-  const index = posts.findIndex(item => item.id.toString() === id);
-
-  // 포스트가 없으면 404 반환
-  if (index === -1) {
-    ctx.status = 404;
-    ctx.body = {
-      message: '포스트가 존재하지 않습니다.'
-    };
-    return;
-  }
-  // 포스트가 존재하면 index 번쨰 아이템 제거
-  posts.splice(index, 1);
-  ctx.status = 204;
-};
-
-/**
- * 특정 포스트 수정(교체)
- * PUT /api/posts/:id
- * {title, body}
- * */
-export const replace = ctx => {
-  const {id} = ctx.params;
-  const index = posts.findIndex(item => item.id.toString() === id);
-
-  // 포스트가 없으면 404 반환
-  if (index === -1) {
-    ctx.status = 404;
-    ctx.body = {
-      message: '포스트가 존재하지 않습니다.'
-    };
-    return;
-  }
-
-  posts[index] = {
-    id,
-    ...ctx.request.body
-  };
-  ctx.body = posts[index];
 };
 
 /**
@@ -104,21 +43,4 @@ export const replace = ctx => {
  * {title, body}
  * */
 export const update = ctx => {
-  const {id} = ctx.params;
-  const index = posts.findIndex(item => item.id.toString() === id);
-
-  // 포스트가 없으면 404 반환
-  if (index === -1) {
-    ctx.status = 404;
-    ctx.body = {
-      message: '포스트가 존재하지 않습니다.'
-    };
-    return;
-  }
-
-  posts[index] = {
-    ...posts[index],
-    ...ctx.request.body
-  };
-  ctx.body = posts[index];
 };
