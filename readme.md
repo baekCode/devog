@@ -493,3 +493,19 @@ skip 함수만 사용할 경우 파라미터 값에 10을 넣으면 10개를 제
 
 limit 함수도 같이 써야 한다.
 
+
+
+##### 마지막페이지 번호 처리
+
+mongoose countDocuments() 함수를 이용하여 페이지 처리를 해본다.
+
+```javascript
+...
+
+// Post의 총 갯수 정의
+const postCount = await Post.countDocuments().exec();
+// HTTP 헤더 설정
+ctx.set('Last-Post', Math.ceil(postCount / 10))
+
+```
+
