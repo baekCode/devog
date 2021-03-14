@@ -220,3 +220,26 @@ export const read = async ctx => {
 };
 ```
 
+
+
+##### Post - DELETE 요청
+
+DELETE 요청으로 데이터 삭제
+
+findByIdAndRemove() 메소드를 사용하여 특정조건에 맞는 데이터를 하나 찾아서 삭제한다.
+
+```javascript
+/**
+ * 특정 포스트 제거
+ * DELETE /api/posts/:id
+ * */
+export const remove = async ctx => {
+  const {id} = ctx.params;
+  try{
+    await Post.findByIdAndRemove(id).exec();
+    ctx.status = 204;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+```
