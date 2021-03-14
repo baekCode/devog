@@ -1,3 +1,4 @@
+import Joi from 'joi';
 import mongoose from 'mongoose';
 import Post from '../../models/post.js';
 
@@ -9,6 +10,19 @@ const {ObjectId} = mongoose.Types;
  * {title, body}
  * */
 export const write = async ctx => {
+  const schema = Joi.object().keys({
+    title: Joi.string().required(),
+    body : Joi.string().required(),
+    tags : Joi.array().items(Joi.string()).required()
+  });
+
+  const result = Joi.validate(ctx.request.body, schema);
+  if (result.error) {
+    ctx.status = 400;
+    ctx.body = result.error;
+    return;
+  }
+
   const {title, body, tags} = ctx.request.body;
   const post = new Post({title, body, tags});
   try {
