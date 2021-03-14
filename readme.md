@@ -96,3 +96,80 @@ node 에서 import 할때 확장자 까지 써야 한다.
 ![스크린샷 2021-03-13 오후 10.03.37](/Users/baekcode/Desktop/스크린샷 2021-03-13 오후 10.03.37.png)
 
 ![스크린샷 2021-03-13 오후 10.04.27](/Users/baekcode/Desktop/스크린샷 2021-03-13 오후 10.04.27.png)
+
+
+
+-----
+
+#### Mongoose Model 
+
+[참고하면 좋은 mongoose docs](https://mongoosejs.com/docs/documents.html)
+
+
+
+##### Post Schema 
+
+mongoos의 Shema 를 이용하여 POST 스키마 구조를 정의 한다.
+
+```javascript
+/**
+ * POST SCHEMA
+ * title {string} 제목
+ * body {string} 제목
+ * tags {string[]} 태그 목록
+ * publishedDate {date} 작성 날짜
+ * */
+
+const PostSchema = new Schema({
+  title        : String,
+  body         : String,
+  tags         : [String],
+  publishedDate: {
+    type   : Date,
+    default: Date.now // 현재 날짜를 기본값
+  }
+});
+```
+
+
+
+
+
+##### Post - POST 요청
+
+request body 담긴 전송할 데이터를 new 키워드를 사용하여 Post에 담는다.
+
+mongoose의 save() 메소드를 이용하여 저장한다. (save 메소드가 궁금하다면 mongoose docs 참고)
+
+이후 body로 담긴내용을 내보내준다.
+
+```javascript
+/**
+ * 포스트 작성
+ * POST /api/posts
+ * {title, body}
+ * */
+export const write = async ctx => {
+  const {title, body, tags} = ctx.request.body;
+  const post = new Post({title, body, tags});
+  try {
+    await post.save();
+    ctx.body = post;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+```
+
+![스크린샷 2021-03-14 오전 9.42.10](/Users/baekcode/Desktop/스크린샷 2021-03-14 오전 9.42.10.png)
+
+(▲▲postman 으로 POST 요청한 화면_4번을 요청함)
+
+
+
+
+
+![스크린샷 2021-03-14 오전 9.42.24](/Users/baekcode/Desktop/스크린샷 2021-03-14 오전 9.42.24.png)
+
+(▲▲ 저장된 데이터 데이터_4번 요청한 데이터들)
+
