@@ -101,7 +101,7 @@ node 에서 import 할때 확장자 까지 써야 한다.
 
 -----
 
-#### Mongoose Model 
+### Mongoose Model  POST SCHEMA
 
 [참고하면 좋은 mongoose docs](https://mongoosejs.com/docs/documents.html)
 
@@ -516,4 +516,12 @@ ctx.set('Last-Post', Math.ceil(postCount / 10))
 list API 에서 조회한 데이터들중에 body(Post schema body를 말함) 내용이 200자 제한 처리를 하려면
 
 Json 형태로 변환 하여 body의 length 의 값을 계산하여준다.
+
+
+
+-----
+
+### Mongoose Model  USER SCHEMA
+
+- Bcrypt 라이브러리 : 단반향 해시 함수 지원해주는 라이브러리
 
