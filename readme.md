@@ -525,3 +525,9 @@ Json 형태로 변환 하여 body의 length 의 값을 계산하여준다.
 
 - Bcrypt 라이브러리 : 단반향 해시 함수 지원해주는 라이브러리
 
+
+
+
+
+💡macOS / 리눅스 해시 랜덤 문자열 만들기 `openssl rand -hex 64` 
+
