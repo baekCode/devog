@@ -83,9 +83,15 @@ export const login = async ctx => {
 
 /**
  * check 로그인 체크상태 확인
+ * GET /api/auth/check
  * */
 export const check = async ctx => {
-
+  const {user} = ctx.state;
+  if (!user) {
+    ctx.status = 401;
+    return;
+  }
+  ctx.body = user;
 };
 
 /**
