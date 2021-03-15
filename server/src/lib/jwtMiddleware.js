@@ -6,7 +6,7 @@ const jwtMiddleware = (ctx, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(`[jwtMiddleware : decoded] ${decoded}`);
+    console.log(decoded);
     return next();
   } catch (e) {
     return next();

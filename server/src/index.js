@@ -4,6 +4,7 @@ import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
 import mongoose from 'mongoose';
 import api from './api/index.js';
+import jwtMiddleware from './lib/jwtMiddleware.js';
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ router.use('/api', api.routes());
 
 // 라우터 적용 전에 bodyparser 적용
 app.use(bodyParser());
+app.use(jwtMiddleware);
 
 // use : app router
 app.use(router.routes()).use(router.allowedMethods());
