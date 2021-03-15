@@ -1,8 +1,19 @@
+import {Route} from 'react-router-dom';
+import PostPage from './pages/PostPage';
+import WritePage from './pages/WritePage';
+import LoginPage from './pages/LoginPage';
+import PostListPage from './pages/PostListPage';
+import RegisterPage from './pages/RegisterPage';
+
 function App() {
   return (
-    <div className="App">
-
-    </div>
+    <>
+      <Route component={PostListPage} path={['/@:username', '/']} exact/>
+      <Route component={PostPage} path='/@:username/:postId'/>
+      <Route component={LoginPage} path='/login'/>
+      <Route component={RegisterPage} path='/register'/>
+      <Route component={WritePage} path='/write'/>
+    </>
   );
 }
 
