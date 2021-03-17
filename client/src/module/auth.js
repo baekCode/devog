@@ -21,8 +21,8 @@ const initialState = {
 
 const auth = handleActions(
   {
-    [CHANGE_FIELD]   : (state, {payload: {from, key, value}}) => produce(state, draft => {
-      draft[from][key] = value;
+    [CHANGE_FIELD]   : (state, {payload: {form, key, value}}) => produce(state, draft => {
+      draft[form][key] = value;
     }),
     [INITIALIZE_FORM]: (state, {
       payload: form
