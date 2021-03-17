@@ -49,15 +49,15 @@ const titleMap = {
   register : '회원가입'
 }
 
-function AuthForm({type = 'login'}) {
+function AuthForm({type = 'login', form, onChange, onSubmit}) {
   const title = titleMap[type];
   return (
     <Container>
       <Title>{title}</Title>
-      <Form>
-        <Input autoComplete="username" name="username" placeholder="아이디"/>
-        <Input autoComplete="new-password" name="password" placeholder="비밀번호" type="password"/>
-        {type === 'register' && <Input autoComplete="new-password" name="passwordConfirm" placeholder="비밀번호 확인" type="password"/>}
+      <Form onSubmit={onSubmit}>
+        <Input autoComplete="username" name="username" placeholder="아이디" onChange={onChange} value={form.username}/>
+        <Input autoComplete="new-password" name="password" placeholder="비밀번호" type="password" onChange={onChange} value={form.password}/>
+        {type === 'register' && <Input autoComplete="new-password" name="passwordConfirm" placeholder="비밀번호 확인" type="password" onChange={onChange} value={form.passwordConfirm}/>}
         <FormButton cyan fullWidth children="로그인"/>
       </Form>
       <Footer>
