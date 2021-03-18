@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {changeFiled, initalizeForm} from '../../module/auth';
+import {changeField, initializeForm} from '../../module/auth';
 import AuthForm from '../../components/auth/AuthForm';
 
 function LoginForm(props) {
@@ -12,7 +12,7 @@ function LoginForm(props) {
   const onChange = e => {
     const {value, name} = e.target;
     dispatch(
-      changeFiled({
+      changeField({
         form: 'login',
         key : name,
         value
@@ -26,7 +26,7 @@ function LoginForm(props) {
   };
 
   useEffect(() => {
-    dispatch(initalizeForm('login'));
+    dispatch(initializeForm('login'));
   }, [dispatch]);
 
   return (

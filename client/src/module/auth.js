@@ -10,8 +10,8 @@ const INITIALIZE_FORM = 'auth/INITIALIZE_FORM';
 const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] = createRequestActionTypes('auth/REGISTER');
 const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] = createRequestActionTypes('auth/LOGIN');
 
-export const changeFiled = createAction(CHANGE_FIELD, ({form, key, value}) => ({form, key, value}));
-export const initalizeForm = createAction(INITIALIZE_FORM, form => form);
+export const changeField = createAction(CHANGE_FIELD, ({form, key, value}) => ({form, key, value}));
+export const initializeForm = createAction(INITIALIZE_FORM, form => form);
 export const register = createAction(REGISTER, ({username, password}) => ({username, password}));
 export const login = createAction(LOGIN, ({username, password}) => ({username, password}));
 
