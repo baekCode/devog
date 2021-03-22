@@ -4,10 +4,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {changeField, initializeForm, register} from '../../module/auth';
 import AuthForm from '../../components/auth/AuthForm';
 import {check} from '../../module/user';
-import REGISTER_CODE from '../../config';
+import config from '../../config';
 
 function RegisterForm({history}) {
   const dispatch = useDispatch();
+  const {REGISTER_CODE} = config;
   const [error, setError] = useState(null);
   const {form, auth, authError, user} = useSelector(({auth, user}) => ({
     form     : auth.register,
