@@ -2,13 +2,15 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeField, initializeForm, register} from '../../module/auth';
 import AuthForm from '../../components/auth/AuthForm';
+import {check} from '../../module/user';
 
 function RegisterForm(props) {
   const dispatch = useDispatch();
-  const {form, auth, authError} = useSelector(({auth}) => ({
+  const {form, auth, authError, user} = useSelector(({auth, user}) => ({
     form     : auth.register,
     auth     : auth.auth,
-    authError: auth.authError
+    authError: auth.authError,
+    user     : user.user
   }));
 
   const onChange = e => {
@@ -37,7 +39,6 @@ function RegisterForm(props) {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(auth)
     if (authError) {
       console.log('오류!');
       console.log(authError);
@@ -46,8 +47,16 @@ function RegisterForm(props) {
     if (auth) {
       console.log('회원가입 성공');
       console.log(auth);
+      dispatch(check());
     }
-  }, [auth, authError]);
+  }, [auth, authError, dispatch]);
+
+  useEffect(() => {
+    if (user) {
+      console.log('check API Success');
+      console.log(user);
+    }
+  }, [user]);
 
   return (
     <AuthForm type='register' form={form} onChange={onChange} onSubmit={onSubmit}/>
