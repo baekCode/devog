@@ -29,9 +29,9 @@ const Utils = styled.div`
 const UserInfo = styled.div`
   font-weight: bold;
   margin-right: 1rem;
-`
+`;
 
-function Header({user}) {
+function Header({user, onLogout}) {
   return (
     <Container>
       <Contents>
@@ -39,8 +39,8 @@ function Header({user}) {
         <Utils>
           {user ? (
             <>
-              <UserInfo children={user.username} />
-              <Button children="로그아웃"/>
+              <UserInfo children={user.username}/>
+              <Button onClick={onLogout} children="로그아웃"/>
             </>
           ) : (
             <>
