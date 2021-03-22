@@ -26,14 +26,27 @@ const Utils = styled.div`
   display: flex;
   align-items: center;
 `;
+const UserInfo = styled.div`
+  font-weight: bold;
+  margin-right: 1rem;
+`
 
-function Header(props) {
+function Header({user}) {
   return (
     <Container>
       <Contents>
         <Logo children="DEVOG"/>
         <Utils>
-          <Button to="/login" children="로그인"/>
+          {user ? (
+            <>
+              <UserInfo children={user.username} />
+              <Button children="로그아웃"/>
+            </>
+          ) : (
+            <>
+              <Button to="/login" children="로그인"/>
+            </>
+          )}
         </Utils>
       </Contents>
     </Container>
