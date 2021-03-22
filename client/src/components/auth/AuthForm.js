@@ -43,21 +43,31 @@ const Anchor = styled(Link)`
     color: ${palette.gray[9]}
   }
 `;
+const ErrorMessage = styled.p`
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: red;
+  text-align: center;
+`;
 
 const titleMap = {
-  login : '로그인',
-  register : '회원가입'
-}
+  login   : '로그인',
+  register: '회원가입'
+};
 
-function AuthForm({type = 'login', form, onChange, onSubmit}) {
+function AuthForm({type = 'login', form, onChange, onSubmit, error}) {
   const title = titleMap[type];
   return (
     <Container>
       <Title>{title}</Title>
       <Form onSubmit={onSubmit}>
         <Input autoComplete="username" name="username" placeholder="아이디" onChange={onChange} value={form.username}/>
-        <Input autoComplete="new-password" name="password" placeholder="비밀번호" type="password" onChange={onChange} value={form.password}/>
-        {type === 'register' && <Input autoComplete="new-password" name="passwordConfirm" placeholder="비밀번호 확인" type="password" onChange={onChange} value={form.passwordConfirm}/>}
+        <Input autoComplete="new-password" name="password" placeholder="비밀번호" type="password" onChange={onChange}
+               value={form.password}/>
+        {type === 'register' &&
+        <Input autoComplete="new-password" name="passwordConfirm" placeholder="비밀번호 확인" type="password"
+               onChange={onChange} value={form.passwordConfirm}/>}
+        {error && <ErrorMessage children={error}/>}
         <FormButton cyan fullWidth children="로그인"/>
       </Form>
       <Footer>
