@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react';
+import {withRouter} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeField, initializeForm, register} from '../../module/auth';
 import AuthForm from '../../components/auth/AuthForm';
 import {check} from '../../module/user';
 
-function RegisterForm(props) {
+function RegisterForm({history}) {
   const dispatch = useDispatch();
   const {form, auth, authError, user} = useSelector(({auth, user}) => ({
     form     : auth.register,
@@ -53,14 +54,13 @@ function RegisterForm(props) {
 
   useEffect(() => {
     if (user) {
-      console.log('check API Success');
-      console.log(user);
+      history.push('/');
     }
-  }, [user]);
+  }, [history, user]);
 
   return (
     <AuthForm type='register' form={form} onChange={onChange} onSubmit={onSubmit}/>
   );
 }
 
-export default RegisterForm;
+export default withRouter(RegisterForm);
