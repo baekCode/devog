@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {changeField, initializeForm, register} from '../../module/auth';
 import AuthForm from '../../components/auth/AuthForm';
 import {check} from '../../module/user';
+import REGISTER_CODE from '../../config';
 
 function RegisterForm({history}) {
   const dispatch = useDispatch();
@@ -28,10 +29,15 @@ function RegisterForm({history}) {
 
   const onSubmit = e => {
     e.preventDefault();
-    const {username, password, passwordConfirm} = form;
+    const {username, password, passwordConfirm, registerCode} = form;
 
-    if ([username, password, passwordConfirm].includes('')) {
+    if ([username, password, passwordConfirm, registerCode].includes('')) {
       setError('빈 칸을 모두 입력하세요.');
+      return;
+    }
+
+    if (registerCode !== REGISTER_CODE) {
+      setError('가입코드를 확인해 주세요.');
       return;
     }
 

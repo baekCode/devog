@@ -64,9 +64,22 @@ function AuthForm({type = 'login', form, onChange, onSubmit, error}) {
         <Input autoComplete="username" name="username" placeholder="아이디" onChange={onChange} value={form.username}/>
         <Input autoComplete="new-password" name="password" placeholder="비밀번호" type="password" onChange={onChange}
                value={form.password}/>
-        {type === 'register' &&
-        <Input autoComplete="new-password" name="passwordConfirm" placeholder="비밀번호 확인" type="password"
-               onChange={onChange} value={form.passwordConfirm}/>}
+        {type === 'register' && (
+          <>
+            <Input autoComplete="new-password"
+                   name="passwordConfirm"
+                   placeholder="비밀번호 확인"
+                   type="password"
+                   onChange={onChange}
+                   value={form.passwordConfirm}/>
+            <Input autoComplete="register-code"
+                   name="registerCode"
+                   placeholder="가입코드"
+                   type="number"
+                   onChange={onChange}
+                   value={form.registerCode}/>
+          </>
+        )}
         {error && <ErrorMessage children={error}/>}
         <FormButton cyan fullWidth children="로그인"/>
       </Form>

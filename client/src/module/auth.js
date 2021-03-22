@@ -28,6 +28,7 @@ const initialState = {
     username       : '',
     password       : '',
     passwordConfirm: '',
+    registerCode   : ''
   },
   login    : {
     username: '',
@@ -56,12 +57,12 @@ const auth = handleActions(
       ...state,
       authError: error,
     }),
-    [LOGIN_SUCCESS]: (state, {payload: auth}) => ({
+    [LOGIN_SUCCESS]   : (state, {payload: auth}) => ({
       ...state,
       authError: null,
       auth,
     }),
-    [LOGIN_FAILURE]: (state, {payload: error}) => ({
+    [LOGIN_FAILURE]   : (state, {payload: error}) => ({
       ...state,
       authError: error,
     })
