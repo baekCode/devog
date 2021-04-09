@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/palette';
 
@@ -47,24 +47,47 @@ const Tag = styled.div`
   }
 `;
 
-const TagItem = React.memo(({tag}) => <Tag>{tag}</Tag>);
+const TagItem = React.memo(({tag, onRemove}) => <Tag onClick={() => onRemove(tag)}>{tag}</Tag>);
 
-const Tags = React.memo(({tags}) => (
+const Tags = React.memo(({tags, onRemove}) => (
   <TagList>
-    {tags.map(tag => <TagItem key={tag} tag={tag}/>)}
+    {tags.map(tag => <TagItem key={tag} tag={tag} onRemove={onRemove}/>)}
   </TagList>
 ));
 
 
 function TagBox(props) {
+  const [input, setInput] = useState('');
+  const [localTags, setLocalTags] = useState([]);
+
+  const insertTag = useCallback(tag => {
+    if (!tag) return;
+    if (localTags.includes(tag)) return;
+    setLocalTags([...localTags, tag]);
+  }, [localTags]);
+
+  const onRemove = useCallback(tag => {
+    setLocalTags(localTags.filter(t => t !== tag));
+  }, [localTags]);
+
+  const onChange = useCallback(e => {
+    setInput(e.target.value);
+  }, []);
+
+  const onSubmit = useCallback(e => {
+    e.preventDefault();
+    insertTag(input.trim());
+    setInput('');
+  }, [input, insertTag]);
+
   return (
     <Container>
       <Title>태그</Title>
-      <Form>
-        <input type="text"/>
+      <Form onSubmit={onSubmit}>
+        <input value={input} onChange={onChange} type="text"/>
         <Button>추가</Button>
       </Form>
-      <Tags tags={['TEST1', 'TEST2']}/>
+      <Tags onRemove={onRemove} tags={localTags}/>
     </Container>
   );
 }
