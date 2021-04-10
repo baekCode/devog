@@ -1,7 +1,7 @@
 import {createAction, handleActions} from 'redux-actions';
 import {takeLatest} from 'redux-saga/effects';
 import createRequestSaga, {createRequestActionTypes} from '../lib/createRequestSaga';
-import * as postsAPI from '../lib/api/post';
+import * as postsAPI from '../lib/api/posts';
 
 const INITIALIZE = 'write/INITIALIZE';
 const CHANGE_FIELD = 'write/CHANGE_FIELD';
