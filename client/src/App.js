@@ -1,4 +1,4 @@
-import {Route} from 'react-router-dom';
+import {Route, Redirect} from 'react-router-dom';
 import PostPage from './pages/PostPage';
 import WritePage from './pages/WritePage';
 import LoginPage from './pages/LoginPage';
@@ -13,6 +13,7 @@ function App() {
       <Route component={LoginPage} path='/login'/>
       <Route component={RegisterPage} path='/register'/>
       <Route component={WritePage} path='/write'/>
+      <Redirect from={'*'} to={'/'}/>
     </>
   );
 }
