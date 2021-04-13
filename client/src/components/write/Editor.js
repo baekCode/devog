@@ -8,6 +8,7 @@ import Responsive from '../common/Responsive';
 const Container = styled(Responsive)`
   padding-top: 5rem;
   padding-bottom: 5rem;
+  margin-top: 3rem;
 `;
 const TitleInput = styled.input`
   width: 100%;

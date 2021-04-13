@@ -1,12 +1,13 @@
 import React from 'react';
-import Responsive from '../components/common/Responsive';
 import Editor from '../components/write/Editor';
+import HeaderContainer from '../containers/common/HeaderContainer';
 
 function WritePage(props) {
   return (
-    <Responsive>
+    <>
+      <HeaderContainer/>
       <Editor/>
-    </Responsive>
+    </>
   );
 }
 
