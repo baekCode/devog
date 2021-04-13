@@ -8,9 +8,10 @@ const Container = styled(Responsive)`
   padding-bottom: 5rem;
 `;
 
-const PostItem = React.memo(({item}) => (<Link to={`/posts/${item._id}`}>{item.title}</Link>));
+const PostItem = React.memo(({item}) => (<Link to={`/@${item.user.username}/${item._id}`}>{item.title}</Link>));
 
 function Posts({posts}) {
+  console.log(posts);
   return (
     <Container>{posts?.map(item => <PostItem key={item._id} item={item}/>)}</Container>
   );
