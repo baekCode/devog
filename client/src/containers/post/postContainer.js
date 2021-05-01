@@ -24,7 +24,7 @@ function PostContainer({match}) {
   }, [dispatch, postId]);
 
   return (
-    <PostViewer/>
+    <PostViewer post={post} error={error} loading={loading}/>
   );
 }
 

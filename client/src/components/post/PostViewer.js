@@ -44,21 +44,31 @@ const Body = styled.div`
   color: ${palette.gray[8]}
 `;
 
-function PostViewer(props) {
+function PostViewer({post, error, loading}) {
+  if (error) {
+    if (error.response && error.response.status === 404) {
+      return <Container>존재하지 않는 포스트입니다. @@TODO :: 몇초뒤에 메인으로 이동됩니다 라는걸 만들면 좋을듯, 또는 홈으로가기, 리스트로 가기, 뒤로가기 </Container>;
+    }
+    return <Container>에러가 발생했습니다. @@TODO :: 몇초뒤에 메인으로 이동됩니다 라는걸 만들면 좋을듯, 또는 홈으로가기, 리스트로 가기, 뒤로가기 </Container>;
+  }
+
+  if (loading || !post) return null;
+
+  const {title, body, user, tags, publishedDate} = post;
+  console.log(publishedDate);
   return (
     <Container>
       <Head>
-        <Title children={'타이틀'}/>
+        <Title children={title}/>
         <Description>
-          <span>유저네임</span>
-          <span>{new Date().toLocaleDateString()}</span>
+          <span>{user.username}</span>
+          <span>{new Date(publishedDate).toLocaleDateString()}</span>
         </Description>
         <Tags>
-          <span># 태그1</span>
-          <span># 태그2</span>
+          {tags.map(tag => <span key={tag}>#{tag}</span>)}
         </Tags>
       </Head>
-      <Body dangerouslySetInnerHTML={{__html: '<p>테스트 내용</p>'}}/>
+      <Body dangerouslySetInnerHTML={{__html: body}}/>
     </Container>
   );
 }
