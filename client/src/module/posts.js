@@ -5,7 +5,7 @@ import * as postAPI from '../lib/api/posts';
 
 const [POSTS, POSTS_SUCCESS, POSTS_FAILURE] = createRequestActionTypes('post/POSTS');
 
-export const getPosts = createAction(POSTS);
+export const getPosts = createAction(POSTS, ({tag, username, page}) => ({tag, username, page}));
 
 const getPostsSaga = createRequestSaga(POSTS, postAPI.getPosts);
 
