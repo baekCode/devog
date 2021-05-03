@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Responsive from '../common/Responsive';
 import {Link} from 'react-router-dom';
 import palette from '../../lib/palette';
+import Button from '../common/Button';
 
 const Container = styled(Responsive)`
   padding-top: 5rem;
@@ -11,13 +12,15 @@ const Container = styled(Responsive)`
 const Item = styled.div`
   padding-top: 3rem;
   padding-bottom: 3rem;
-  border-top: 1px solid ${palette.gray[2]};
-
+  
   &:first-child {
     padding-top: 0;
     border-top: 0;
   }
-
+  
+  &+& {
+    border-top: 1px solid ${palette.gray[2]};
+  }
 `;
 const ItemTitle = styled.h2`
   margin-bottom: 1rem;
@@ -69,10 +72,14 @@ const PostItem = React.memo(({item}) => (
   </Item>
 ));
 
-function Posts({posts}) {
+function Posts({posts, loading, error, showWriteButton}) {
+
+  if (error) return <Container>에러가 발생했습니다.</Container>;
+
   return (
     <Container>
-      {posts?.map(item => <PostItem key={item._id} item={item}/>)}
+      {showWriteButton && <div><Button cyan to={'/write'}>글쓰기</Button></div>}
+      {!loading && posts && <>{posts.map(item => <PostItem key={item._id} item={item}/>)}</>}
     </Container>
   );
 }
