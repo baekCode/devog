@@ -45,7 +45,7 @@ const Body = styled.div`
   color: ${palette.gray[8]}
 `;
 
-function PostViewer({post, error, loading, actionButton}) {
+function PostViewer({userInfo, post, error, loading, actionButton}) {
   if (error) {
     if (error.response && error.response.status === 404) {
       return <Container>존재하지 않는 포스트입니다. @@TODO :: 몇초뒤에 메인으로 이동됩니다 라는걸 만들면 좋을듯, 또는 홈으로가기, 리스트로 가기, 뒤로가기 </Container>;
@@ -70,7 +70,7 @@ function PostViewer({post, error, loading, actionButton}) {
           {tags.map(tag => <span key={tag}>#{tag}</span>)}
         </Tags>
       </Head>
-      {actionButton}
+      {userInfo?._id === post?.user._id && actionButton}
       <Body dangerouslySetInnerHTML={{__html: body}}/>
     </Container>
   );

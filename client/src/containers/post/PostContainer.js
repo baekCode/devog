@@ -41,6 +41,7 @@ function PostContainer({match, history}) {
 
   return (
     <PostViewer
+      userInfo={user}
       post={post}
       error={error}
       loading={loading}
