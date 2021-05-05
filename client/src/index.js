@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
+import {applyMiddleware, createStore} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import GlobalStyle from './lib/GlobalStyle';
@@ -10,6 +10,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import rootReducer, {rootSaga} from './module';
 import {check, tempSetUser} from './module/user';
+import {HelmetProvider} from 'react-helmet-async';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
@@ -32,8 +33,10 @@ loadUser();
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <GlobalStyle/>
-      <App/>
+      <HelmetProvider>
+        <GlobalStyle/>
+        <App/>
+      </HelmetProvider>
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')

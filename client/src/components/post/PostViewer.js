@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/palette';
 import Responsive from '../common/Responsive';
+import {Helmet} from 'react-helmet-async';
 
 const Container = styled(Responsive)`
   padding-top: 5rem;
@@ -58,6 +59,7 @@ function PostViewer({post, error, loading, actionButton}) {
 
   return (
     <Container>
+      <Helmet><title>{title} - DEVOG</title></Helmet>
       <Head>
         <Title children={title}/>
         <Description>

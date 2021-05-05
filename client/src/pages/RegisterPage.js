@@ -1,11 +1,13 @@
 import React from 'react';
 import AuthTemplate from '../components/auth/AuthTemplate';
 import RegisterForm from '../containers/auth/RegisterForm';
+import {Helmet} from 'react-helmet-async';
 
 function RegisterPage(props) {
   return (
     <AuthTemplate>
-      <RegisterForm />
+      <Helmet><title>회원가입 - DEVOG</title></Helmet>
+      <RegisterForm/>
     </AuthTemplate>
   );
 }
