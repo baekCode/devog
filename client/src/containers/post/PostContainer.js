@@ -5,6 +5,7 @@ import PostViewer from '../../components/post/PostViewer';
 import {readPost, unloadPost} from '../../module/post';
 import PostActionButton from '../../components/post/PostActionButton';
 import {setOriginalPost} from '../../module/write';
+import {removePost} from '../../lib/api/posts';
 
 function PostContainer({match, history}) {
   const dispatch = useDispatch();
@@ -19,6 +20,14 @@ function PostContainer({match, history}) {
   const onEdit = () => {
     dispatch(setOriginalPost(post));
     history.push('/write');
+  };
+  const onRemove = async () => {
+    try {
+      await removePost(postId);
+      history.push('/');
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
@@ -35,7 +44,7 @@ function PostContainer({match, history}) {
       post={post}
       error={error}
       loading={loading}
-      actionButton={<PostActionButton onEdit={onEdit}/>}
+      actionButton={<PostActionButton onEdit={onEdit} onRemove={onRemove}/>}
       ownPost={user && user.id === post && post.id}
     />
   );
