@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.bubble.css';
 import styled from 'styled-components';
@@ -36,6 +36,9 @@ function Editor({title, body, onChangeField}) {
   const quillElement = useRef(null);
   const quillInstance = useRef(null);
   const onChangeTitle = e => onChangeField({key: 'title', value: e.target.value});
+
+  const mounted = useRef(false);
+
   useEffect(() => {
     quillInstance.current = new Quill(quillElement.current, {
       theme      : 'bubble',
@@ -58,6 +61,12 @@ function Editor({title, body, onChangeField}) {
       }
     });
   }, [onChangeField]);
+  
+  useEffect(() => {
+    if (mounted.current) return;
+    mounted.current = true;
+    quillInstance.current.root.innerHTML = body;
+  }, [body]);
 
   return (
     <Container>
