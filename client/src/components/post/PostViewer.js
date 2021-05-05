@@ -55,7 +55,7 @@ function PostViewer({post, error, loading}) {
   if (loading || !post) return null;
 
   const {title, body, user, tags, publishedDate} = post;
-  console.log(publishedDate);
+  
   return (
     <Container>
       <Head>
