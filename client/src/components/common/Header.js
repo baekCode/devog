@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Responsive from './Responsive';
 import Button from './Button';
+import {Link} from 'react-router-dom';
 
 const Container = styled.div`
   position: fixed;
@@ -17,7 +18,7 @@ const Contents = styled(Responsive)`
   justify-content: space-between;
   height: 4rem;
 `;
-const Logo = styled.div`
+const Logo = styled(Link)`
   font-weight: bold;
   font-size: 1.125rem;
   letter-spacing: 2px;
@@ -35,7 +36,7 @@ function Header({user, onLogout}) {
   return (
     <Container>
       <Contents>
-        <Logo children="DEVOG"/>
+        <Logo children="DEVOG" to={'/'}/>
         <Utils>
           {user ? (
             <>
