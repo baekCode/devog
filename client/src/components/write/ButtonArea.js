@@ -15,10 +15,10 @@ const StyledButton = styled(Button)`
 `;
 
 
-function ButtonArea({onCancel, onPublish}) {
+function ButtonArea({onCancel, onPublish, isEdit}) {
   return (
     <Container>
-      <StyledButton cyan onClick={onPublish}>등록하기</StyledButton>
+      <StyledButton cyan onClick={onPublish}>{isEdit ? '수정하기' : '등록하기'}</StyledButton>
       <StyledButton onClick={onCancel}>취소하기</StyledButton>
     </Container>
   );
