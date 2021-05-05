@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/palette';
+import RemoveModal from './RemoveModal';
 
 const Container = styled.div`
   display:flex;
@@ -25,12 +26,27 @@ const ActionButton = styled.button`
 `;
 
 
-function PostActionButton({onEdit}) {
+function PostActionButton({onEdit, onRemove}) {
+  const [modal, setModal] = useState(false);
+  const onClickRemove = () => setModal(true);
+  const onCancel = () => setModal(false);
+  const onConfirm = () => {
+    setModal(false);
+    onRemove();
+  };
+
   return (
-    <Container>
-      <ActionButton onClick={onEdit}>수정</ActionButton>
-      <ActionButton>삭제</ActionButton>
-    </Container>
+    <>
+      <Container>
+        <ActionButton onClick={onEdit}>수정</ActionButton>
+        <ActionButton onClick={onClickRemove}>삭제</ActionButton>
+      </Container>
+      <RemoveModal
+        visible={modal}
+        onConfirm={onConfirm}
+        onCancel={onCancel}
+      />
+    </>
   );
 }
 
