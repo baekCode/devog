@@ -14,7 +14,6 @@ const StyledButton = styled(Button)`
   }
 `;
 
-
 function ButtonArea({onCancel, onPublish, isEdit}) {
   return (
     <Container>
