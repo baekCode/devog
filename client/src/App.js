@@ -5,6 +5,8 @@ import WritePage from './pages/WritePage';
 import LoginPage from './pages/LoginPage';
 import PostListPage from './pages/PostListPage';
 import RegisterPage from './pages/RegisterPage';
+import AboutPage from './pages/AboutPage';
+import AboutWritePage from './pages/AboutWirtePage';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route component={LoginPage} path='/login'/>
         <Route component={RegisterPage} path='/register'/>
         <Route component={WritePage} path='/write'/>
+        <Route component={AboutPage} path='/about'/>
+        <Route component={AboutWritePage} path='/about-write'/>
         <Redirect from={'*'} to={'/'}/>
       </Switch>
     </>
