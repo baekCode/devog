@@ -23,7 +23,7 @@ export function* writeSaga() {
   yield takeLatest(UPDATE_POST, updatePostSaga);
 }
 
-const initailSatate = {
+const initialState = {
   title         : '',
   body          : '',
   tags          : [],
@@ -33,7 +33,7 @@ const initailSatate = {
 };
 
 const write = handleActions({
-  [INITIALIZE]         : state => initailSatate,
+  [INITIALIZE]         : state => initialState,
   [SET_ORIGINAL_POST]  : (state, {payload: post}) => ({
     ...state,
     title         : post.title,
@@ -66,6 +66,6 @@ const write = handleActions({
     ...state,
     error
   })
-}, initailSatate);
+}, initialState);
 
 export default write;
